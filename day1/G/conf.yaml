@@ -1,21 +1,33 @@
 args:
-  n: 1000
+  t: 10000
+  a: 1000000
+  d: 1000000000
 compile:
   c: -O2 -std=c11
   cpp: -O2 -std=c++14
   java: ''
   pas: -O2
   py: ''
-data: []
+data: 
+- cases: [1,2,3,4]
+  score: 100
 folder: problem
 memory limit: 512 MiB
-name: G
+name: terminal
 partial score: false
 pre: []
-samples: []
+samples:
+- cases: [1]
 time limit: 1.0
 title:
-  zh-cn: 用于试题标题的中文名称
+  zh-cn: 有限小数
 type: program
-users: {}
+users:
+  DoremySG:
+    std:
+      expected: == 100
+      path: DoremySG/std.cpp
+    slow:
+      expected: == 0
+      path: DoremySG/slow.cpp
 version: 2
