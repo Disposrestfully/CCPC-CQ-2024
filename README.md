@@ -13,4 +13,4 @@
 | I    | 算术               | gyh20  | Easy          | 贪心                 | ix35   |
 | J    | PICO PARK I        | gyh20  | Medium        | 概率 DP              | cxr    |
 | K    | PICO PARK II       | gyh20  | Hard          | 概率，多项式         | rsy    |
-| L    |                    |        | Easy          | 三进制               | cxr    |
+| L    | Pattern            | dhw    | Easy          | 三进制               | cxr    |
