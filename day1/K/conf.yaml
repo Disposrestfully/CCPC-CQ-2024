@@ -1,21 +1,29 @@
 args:
-  n: 1000
+  n: 100000
 compile:
   c: -O2 -std=c11
   cpp: -O2 -std=c++14
   java: ''
   pas: -O2
   py: ''
-data: []
+data: 
+- cases: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
 folder: problem
 memory limit: 512 MiB
-name: K
+name: magicbullet
 partial score: false
-pre: []
-samples: []
-time limit: 1.0
+samples: 
+- cases: [1,2,3]
+time limit: 2.0
 title:
-  zh-cn: 用于试题标题的中文名称
+  zh-cn: 魔弹
 type: program
-users: {}
-version: 2
+users:
+  gyh:
+    std: {expected: == 100, path: ./gyh/std.cpp}
+  rsy:
+    brute1: {expected: == 0, path: ./rsy/brute1.cpp}
+    brute2: {expected: == 0, path: ./rsy/brute2.cpp}
+    brute3: {expected: == 0, path: ./rsy/brute3.cpp}
+version: 1
+
