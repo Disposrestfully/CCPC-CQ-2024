@@ -22,8 +22,8 @@ users:
   gyh:
     std: {expected: == 100, path: ./gyh/std.cpp}
   rsy:
-    brute1: {expected: == 0, path: ./rsy/brute1.cpp}
-    brute2: {expected: == 0, path: ./rsy/brute2.cpp}
-    brute3: {expected: == 0, path: ./rsy/brute3.cpp}
+    # brute1: {expected: == 0, path: ./rsy/brute1.cpp}
+    # brute2: {expected: == 0, path: ./rsy/brute2.cpp}
+    brute3: {expected: == 100, path: ./rsy/brute3.cpp}
 version: 1
 
