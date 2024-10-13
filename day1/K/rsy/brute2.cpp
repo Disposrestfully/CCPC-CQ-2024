@@ -6,7 +6,8 @@ signed main () {
 	std::ios::sync_with_stdio(false); std::cin.tie(nullptr); std::cout.tie(nullptr);
 	int n; std::string s;
 	std::cin >> n >> s;
-	std::vector<int> a(n), inv(n + 1, 1), pl(n), pr(n);
+	std::vector<int> a(n), fct(n + 1, 1), inv(n + 1, 1), pl(n), pr(n);
+	for (int i = 1; i <= n; i++) fct[i] = 1LL * fct[i - 1] * i % mod;
 	for (int i = 2; i <= n; i++) inv[i] = 1LL * (mod - mod / i) * inv[mod % i] % mod;
 	for (int i = 3; i <= n; i++) inv[i] = 1LL * inv[i - 1] * inv[i] % mod;
 	for (int i = 0; i < n; i++) pl[i] = pr[i] = 1;
@@ -18,6 +19,6 @@ signed main () {
 		if (i > 0) inc(a[i - 1], p);
 		if (i < n) inc(a[i], p);
 	}
-	for (int i = 0; i < n; i++) std::cout << a[i] << " \n"[i == n - 1];
+	for (int i = 0; i < n; i++) std::cout << 1LL * a[i] * fct[n] % mod << " \n"[i == n - 1];
 	return 0;
 }
