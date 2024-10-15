@@ -21,5 +21,7 @@ type: program
 users:
   gyh:
     std: {expected: == 100, path: ./gyh/std.cpp}
+  wcz:
+    sol: {expected: == 100, path: ./wcz/sol.cpp}
 version: 1
 
