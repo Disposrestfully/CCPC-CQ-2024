@@ -20,7 +20,7 @@ int main(){
 			for(int i=2;i<=9;++i)if(a[i]){--a[i],++a[i+1];break;}
 		}
 		int ans=1;
-		for(int i=2;i<=9;++i)
+		for(int i=2;i<=10;++i)
 			for(int j=1;j<=a[i];++j)
 				ans=1ll*i*ans%M;
 		printf("%d\n",ans);
