@@ -14,7 +14,7 @@ int main(){
 	freopen("3.ans","w",stdout); 
 	t=read();
 	while(t--){
-		for(int i=1;i<=9;++i)a[i]=read();
+		for(int i=1;i<=9;++i)a[i]=read();a[10]=0;
 		while(a[1]&&a[2])--a[1],--a[2],++a[3];
 		while(a[1]>=3)a[1]-=3,++a[3];
 		if(a[1]==2)++a[2],a[1]-=2;
