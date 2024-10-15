@@ -6,16 +6,23 @@ compile:
   java: ''
   pas: -O2
   py: ''
-data: []
+data:
+- cases: [1,2,3]
+  score: 100
 folder: problem
 memory limit: 512 MiB
 name: rect
 partial score: false
 pre: []
-samples: []
+samples: 
+- cases: [1]
 time limit: 1.0
 title:
   zh-cn: 连方
 type: program
-users: {}
+users:
+  DoremySG:
+    std:
+      expected: == 100
+      path: DoremySG/std.cpp
 version: 2
