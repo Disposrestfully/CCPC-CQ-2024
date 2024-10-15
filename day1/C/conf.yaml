@@ -21,4 +21,6 @@ type: program
 users:
   psj:
     std: {expected: == 100, path: psj/std.cpp}
+  wcz:
+    std: {expected: == 100, path: wcz/sol.cpp}
 version: 2
