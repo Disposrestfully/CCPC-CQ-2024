@@ -22,4 +22,6 @@ type: program
 users:
   xzy:
     std: {expected: == 100, path: ./xzy/std.cpp}
+  wcz:
+    sol: {expected: == 100, path: ./wcz/sol.cpp}
 version: 1
