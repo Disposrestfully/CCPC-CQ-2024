@@ -17,7 +17,7 @@ int main (int argc,char* argv[]) {
 	n=inf.readInt(1,100000);
 	inf.readSpace();
 	ensuref(n&1,"n is odd\n");
-	m=inf.readInt(1,100000);
+	m=inf.readInt(0,100000);
 	inf.readChar('\n');
 	for (int i=1;i<=n;i++) {
 		a=inf.readInt(1,n);
