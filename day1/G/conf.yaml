@@ -30,4 +30,8 @@ users:
     slow:
       expected: == 0
       path: DoremySG/slow.cpp
+  gyh:
+    test:
+      expected: == 100
+      path: gyh/test.cpp
 version: 2
