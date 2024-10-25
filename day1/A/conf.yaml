@@ -77,4 +77,8 @@ users:
     std:
       expected: == 100
       path: psj/std.cpp
+  cxr:
+    std:
+      expected: == 100
+      path: check/std.cpp
 version: 2
