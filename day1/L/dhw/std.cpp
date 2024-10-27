@@ -10,9 +10,9 @@ int main()
 	{
 		if(s1[i]!='1'&&s2[i]!='1')
 		{
-			cout<<0;return 0;
+			cout<<0<<endl;return 0;
 		}
 	}
-	cout<<1;
+	cout<<1<<endl;
 	return 0;
 }
