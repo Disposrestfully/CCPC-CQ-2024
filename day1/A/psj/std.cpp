@@ -36,6 +36,6 @@ int main(){
 			if(i >> j & 1) tms = 1ll * tms * poww(prm[j] , P - 2) % P * (prm[j] - 1) % P;
 		ans = (ans + tms) % P;
 	}
-	cout << ans;
+	cout << ans << endl;
 	return 0;
 }

@@ -25,7 +25,6 @@ int check(InStream &in,int test){
 				cnt++;
 			}
 		}
-	//	cerr<<res[i]<<endl;
 	}
 	if(res[1]!=a)in.quitf(_wa,"Row 1 does not match with a.(testcase %d)",test);
 	if(res[7]!=b)in.quitf(_wa,"Row 7 does not match with b.(testcase %d)",test);
@@ -43,25 +42,22 @@ int check(InStream &in,int test){
 			if(res[i][j]=='#'){
 				queue<pair<int,int>>q;
 				q.push({i,j});
-				res[i][j]='.';
+				res[x][y]='.';
 				cnt--;
 				while(!q.empty()){
 					int x=q.front().first,y=q.front().second;
 					for(int k=0;k<8;k++){
 						int px=x+dx[k],py=y+dy[k];
-						if(px>=1 and px<=7 and py>=0 and py<n and res[px][py]=='#'){
+						if(px>=0 and px<=6 and py>=0 and py<n and res[px][py]=='#'){
 							q.push({px,py});
 							cnt--;
 							res[px][py]='.';
 						}
 					}
-					q.pop();
 				}
 				if(cnt)in.quitf(_wa,"Condition failed: connected.(testcase %i)",test);
-				break;
 			}
 		}
-		if(!cnt)break;
 	}
 	return 1;
 }
@@ -69,13 +65,11 @@ signed main(signed argc,char** argv){
 	registerTestlibCmd(argc,argv);
 	int t=inf.readInt();
 	for(int i=1;i<=t;i++){
-		//cerr<<i<<endl;
 		n=inf.readInt();
 		a=inf.readToken();
 		b=inf.readToken();
-	//	cerr<<n<<endl<<a<<endl<<b<<endl;
-	   	int j=check(ans,i);
-	   	int p=check(ouf,i);
+	   	int j=check(ans);
+	   	int p=check(ouf);
 	   	if(j<p)quitf(_fail,"Answer should exists.(testcase %d)",i);
 	   	if(j>p)quitf(_wa,"Answer exists but not found.(testcases %d)",i);
 	}

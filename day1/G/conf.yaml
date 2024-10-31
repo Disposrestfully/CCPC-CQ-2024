@@ -11,6 +11,9 @@ compile:
 data: 
 - cases: [1,2,3,4]
   score: 100
+  chk:
+    chk.cpp
+    testlib.h
 folder: problem
 memory limit: 512 MiB
 name: terminal
@@ -30,4 +33,8 @@ users:
     slow:
       expected: == 0
       path: DoremySG/slow.cpp
+  gyh:
+    test:
+      expected: == 100
+      path: gyh/test.cpp
 version: 2

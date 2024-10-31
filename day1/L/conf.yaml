@@ -22,4 +22,6 @@ type: program
 users: 
   dhw:
     std: {expected: ==100, path: ./dhw/std.cpp}
+  cxr:
+    std: {expected: ==100, path: ./check/std.cpp}
 version: 1

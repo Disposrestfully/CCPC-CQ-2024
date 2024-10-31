@@ -22,10 +22,11 @@
 #define _TESTLIB_H_
 
 /*
- * Copyright (c) 2005-2024
+ * Copyright (c) 2005-2023
  */
 
-#define VERSION "0.9.42-SNAPSHOT"
+#define TESTLIB_FOR_LEMONS
+#define VERSION "0.9.41-SNAPSHOT-MODIFIED-LOCAL-AND-LEMON-20231012-68F9F30"
 
 /*
  * Mike Mirzayanov
@@ -62,8 +63,19 @@
  *   writes output to program via stdout (use cout, printf, etc).
  */
 
+/*
+ *   This is a modified version created by Xiao Mao (matthew99) and Liangzhou Chen (PinkRabbit).
+ *   Checker for local judger is supported.
+ *   You can use variable perfectScore to know the perfect score of the current test case.
+ *   As we know, you can use registerTestlibCmd(argc, argv) to register a checker.
+ *   For local judger, you can use registerLocalChecker(<Input_File>, <Output_File>, <Answer_File>, <Perfect_Score>, <Score_File>[, <Report_File>]).
+ *   For lemon judger, you can simply use registerLemonChecker(argc, argv).
+ *
+ *   To report bugs or request features: https://github.com/GitPinkRabbit/Testlib-for-Lemons/issues.
+ */
+
 const char *latestFeatures[] = {
-        "Added ConstantBoundsLog, VariablesLog to validator testOverviewLogFile",
+        "Supported checker for local judger",
         "Use setAppesModeEncoding to change xml encoding from windows-1251 to other",
         "rnd.any/wany use distance/advance instead of -/+: now they support sets/multisets",
         "Use syntax `int t = inf.readInt(1, 3, \"~t\");` to skip the lower bound check. Tildes can be used on either side or both: ~t, t~, ~t~",
@@ -2379,7 +2391,12 @@ random_t rnd;
 TTestlibMode testlibMode = _unknown;
 double __testlib_points = std::numeric_limits<float>::infinity();
 
-const size_t VALIDATOR_MAX_VARIABLE_COUNT = 255;
+int perfectScore;
+bool quitpRelativeScoring = false;
+bool partialScoreTrimming = false;
+FILE *scoreFile;
+bool localJudger;
+double partialScore;
 
 struct ValidatorBoundsHit {
     static const double EPS;
@@ -2395,36 +2412,6 @@ struct ValidatorBoundsHit {
                 __testlib_max(maxHit, validatorBoundsHit.maxHit) || ignoreMaxBound
         );
     }
-};
-
-struct ConstantBound {
-    std::string value;
-    bool broken;
-
-    template<typename T>
-    void adjust(T t) {
-        std::string t_string = std::to_string(t);
-        if (t_string.length() >= 32) {
-            broken = true;
-            value = "";
-        } else {
-            if (!broken && value.empty())
-                value = t_string;
-            if (!broken && value != t_string) {
-                broken = true;
-                value = "";
-            }
-        }
-    }
-
-    bool has_value() {
-        return !value.empty() && !broken && value.length() < 32;
-    }
-};
-
-struct ConstantBounds {
-    ConstantBound lowerBound;
-    ConstantBound upperBound;
 };
 
 const double ValidatorBoundsHit::EPS = 1E-12;
@@ -2445,10 +2432,8 @@ private:
     std::string _testCaseFileName;
 
     std::map<std::string, ValidatorBoundsHit> _boundsHitByVariableName;
-    std::map<std::string, ConstantBounds> _constantBoundsByVariableName;
     std::set<std::string> _features;
     std::set<std::string> _hitFeatures;
-    std::set<std::string> _variables;
 
     bool isVariableNameBoundsAnalyzable(const std::string &variableName) {
         for (size_t i = 0; i < variableName.length(); i++)
@@ -2545,36 +2530,10 @@ public:
     }
 
     void addBoundsHit(const std::string &variableName, ValidatorBoundsHit boundsHit) {
-        if (isVariableNameBoundsAnalyzable(variableName)
-                && _boundsHitByVariableName.size() < VALIDATOR_MAX_VARIABLE_COUNT) {
+        if (isVariableNameBoundsAnalyzable(variableName)) {
             std::string preparedVariableName = prepVariableName(variableName);
             _boundsHitByVariableName[preparedVariableName] = boundsHit.merge(_boundsHitByVariableName[preparedVariableName],
                 ignoreMinBound(variableName), ignoreMaxBound(variableName));
-        }
-    }
-
-    void addVariable(const std::string &variableName) {
-        if (isVariableNameBoundsAnalyzable(variableName)
-                && _variables.size() < VALIDATOR_MAX_VARIABLE_COUNT) {
-            std::string preparedVariableName = prepVariableName(variableName);
-            _variables.insert(preparedVariableName);
-        }
-    }
-
-    std::string getVariablesLog() {
-        std::string result;
-        for (const std::string &variableName: _variables)
-            result += "variable \"" + variableName + "\"\n";
-        return result;
-    }
-
-    template<typename T>
-    void adjustConstantBounds(const std::string &variableName, T lower, T upper) {
-        if (isVariableNameBoundsAnalyzable(variableName)
-                && _constantBoundsByVariableName.size() < VALIDATOR_MAX_VARIABLE_COUNT) {
-            std::string preparedVariableName = prepVariableName(variableName);
-            _constantBoundsByVariableName[preparedVariableName].lowerBound.adjust(lower);
-            _constantBoundsByVariableName[preparedVariableName].upperBound.adjust(upper);
         }
     }
 
@@ -2589,27 +2548,6 @@ public:
             if (i->second.maxHit)
                 result += " max-value-hit";
             result += "\n";
-        }
-        return result;
-    }
-
-    std::string getConstantBoundsLog() {
-        std::string result;
-        for (std::map<std::string, ConstantBounds>::iterator i = _constantBoundsByVariableName.begin();
-             i != _constantBoundsByVariableName.end();
-             i++) {
-            if (i->second.lowerBound.has_value() || i->second.upperBound.has_value()) {
-                result += "constant-bounds \"" + i->first + "\":";
-                if (i->second.lowerBound.has_value())
-                    result += " " + i->second.lowerBound.value;
-                else
-                    result += " ?";
-                if (i->second.upperBound.has_value())
-                    result += " " + i->second.upperBound.value;
-                else
-                    result += " ?";
-                result += "\n";
-            }
         }
         return result;
     }
@@ -2643,11 +2581,7 @@ public:
                 if (NULL == f)
                     __testlib_fail("Validator::writeTestOverviewLog: can't write test overview log to (" + fileName + ")");
             }
-            fprintf(f, "%s%s%s%s",
-                getBoundsHitLog().c_str(),
-                getFeaturesLog().c_str(),
-                getConstantBoundsLog().c_str(),
-                getVariablesLog().c_str());
+            fprintf(f, "%s%s", getBoundsHitLog().c_str(), getFeaturesLog().c_str());
             std::fflush(f);
             if (!standard_file)
                 if (std::fclose(f))
@@ -3129,6 +3063,8 @@ NORETURN void InStream::quit(TResult result, const char *msg) {
             if (result >= _partially) {
                 errorName = format("partially correct (%d) ", pctype);
                 isPartial = true;
+                if (localJudger)
+                    message = format("%d", pctype) + " " + message;
                 quitscrS(LightYellow, errorName);
             } else
                 quit(_fail, "What is the code ??? ");
@@ -3180,7 +3116,23 @@ NORETURN void InStream::quit(TResult result, const char *msg) {
     if (resultName != "")
         std::fprintf(stderr, "See file to check exit message\n");
 
-    halt(resultExitCode(result));
+    if (localJudger) {
+        if (result == _ok)
+            fprintf(scoreFile, "%d", perfectScore);
+        else if (result == _points) {
+            if (quitpRelativeScoring)
+                partialScore *= perfectScore;
+            if (partialScoreTrimming && perfectScore >= 2)
+                partialScore = std::min(partialScore, perfectScore - 0.6),
+                partialScore = std::max(partialScore, 0.6);
+            fprintf(scoreFile, "%.0f", partialScore);
+        } else if (isPartial)
+            fprintf(scoreFile, "%d", pctype);
+        else
+            fprintf(scoreFile, "0");
+        exit(0);
+    } else
+        halt(resultExitCode(result));
 }
 
 #ifdef __GNUC__
@@ -3476,16 +3428,12 @@ std::string InStream::readWord(const pattern &p, const std::string &variableName
                            "\"").c_str());
         }
     }
-    if (strict && !variableName.empty())
-        validator.addVariable(variableName);
     return _tmpReadToken;
 }
 
 std::vector<std::string>
 InStream::readWords(int size, const pattern &p, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readWords, readWord(p, variablesName), std::string, true);
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::vector<std::string> InStream::readWords(int size, int indexBase) {
@@ -3500,8 +3448,6 @@ std::vector<std::string>
 InStream::readWords(int size, const std::string &ptrn, const std::string &variablesName, int indexBase) {
     pattern p(ptrn);
     __testlib_readMany(readWords, readWord(p, variablesName), std::string, true);
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::string InStream::readToken(const pattern &p, const std::string &variableName) {
@@ -3511,8 +3457,6 @@ std::string InStream::readToken(const pattern &p, const std::string &variableNam
 std::vector<std::string>
 InStream::readTokens(int size, const pattern &p, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readTokens, readToken(p, variablesName), std::string, true);
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::vector<std::string> InStream::readTokens(int size, int indexBase) {
@@ -3527,8 +3471,6 @@ std::vector<std::string>
 InStream::readTokens(int size, const std::string &ptrn, const std::string &variablesName, int indexBase) {
     pattern p(ptrn);
     __testlib_readMany(readTokens, readWord(p, variablesName), std::string, true);
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 void InStream::readWordTo(std::string &result, const pattern &p, const std::string &variableName) {
@@ -3541,8 +3483,6 @@ void InStream::readWordTo(std::string &result, const pattern &p, const std::stri
             quit(_wa, ("Token parameter [name=" + variableName + "] equals to \"" + __testlib_part(result) +
                        "\", doesn't correspond to pattern \"" + p.src() + "\"").c_str());
     }
-    if (strict && !variableName.empty())
-        validator.addVariable(variableName);
 }
 
 void InStream::readWordTo(std::string &result, const std::string &ptrn, const std::string &variableName) {
@@ -3882,11 +3822,8 @@ long long InStream::readLong(long long minv, long long maxv, const std::string &
         }
     }
 
-    if (strict && !variableName.empty()) {
+    if (strict && !variableName.empty())
         validator.addBoundsHit(variableName, ValidatorBoundsHit(minv == result, maxv == result));
-        validator.adjustConstantBounds(variableName, minv, maxv);
-        validator.addVariable(variableName);
-    }
 
     return result;
 }
@@ -3894,8 +3831,6 @@ long long InStream::readLong(long long minv, long long maxv, const std::string &
 std::vector<long long>
 InStream::readLongs(int size, long long minv, long long maxv, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readLongs, readLong(minv, maxv, variablesName), long long, true)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::vector<long long> InStream::readLongs(int size, int indexBase) {
@@ -3928,11 +3863,8 @@ InStream::readUnsignedLong(unsigned long long minv, unsigned long long maxv, con
         }
     }
 
-    if (strict && !variableName.empty()) {
+    if (strict && !variableName.empty())
         validator.addBoundsHit(variableName, ValidatorBoundsHit(minv == result, maxv == result));
-        validator.adjustConstantBounds(variableName, minv, maxv);
-        validator.addVariable(variableName);
-    }
 
     return result;
 }
@@ -3940,8 +3872,6 @@ InStream::readUnsignedLong(unsigned long long minv, unsigned long long maxv, con
 std::vector<unsigned long long> InStream::readUnsignedLongs(int size, unsigned long long minv, unsigned long long maxv,
                                                             const std::string &variablesName, int indexBase) {
     __testlib_readMany(readUnsignedLongs, readUnsignedLong(minv, maxv, variablesName), unsigned long long, true)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::vector<unsigned long long> InStream::readUnsignedLongs(int size, int indexBase) {
@@ -3979,11 +3909,8 @@ int InStream::readInt(int minv, int maxv, const std::string &variableName) {
         }
     }
 
-    if (strict && !variableName.empty()) {
+    if (strict && !variableName.empty())
         validator.addBoundsHit(variableName, ValidatorBoundsHit(minv == result, maxv == result));
-        validator.adjustConstantBounds(variableName, minv, maxv);
-        validator.addVariable(variableName);
-    }
 
     return result;
 }
@@ -3994,8 +3921,6 @@ int InStream::readInteger(int minv, int maxv, const std::string &variableName) {
 
 std::vector<int> InStream::readInts(int size, int minv, int maxv, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readInts, readInt(minv, maxv, variablesName), int, true)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::vector<int> InStream::readInts(int size, int indexBase) {
@@ -4004,8 +3929,6 @@ std::vector<int> InStream::readInts(int size, int indexBase) {
 
 std::vector<int> InStream::readIntegers(int size, int minv, int maxv, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readIntegers, readInt(minv, maxv, variablesName), int, true)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::vector<int> InStream::readIntegers(int size, int indexBase) {
@@ -4045,23 +3968,18 @@ double InStream::readReal(double minv, double maxv, const std::string &variableN
         }
     }
 
-    if (strict && !variableName.empty()) {
+    if (strict && !variableName.empty())
         validator.addBoundsHit(variableName, ValidatorBoundsHit(
                 doubleDelta(minv, result) < ValidatorBoundsHit::EPS,
                 doubleDelta(maxv, result) < ValidatorBoundsHit::EPS
         ));
-        validator.adjustConstantBounds(variableName, minv, maxv);
-        validator.addVariable(variableName);
-    }
-    
+
     return result;
 }
 
 std::vector<double>
 InStream::readReals(int size, double minv, double maxv, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readReals, readReal(minv, maxv, variablesName), double, true)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::vector<double> InStream::readReals(int size, int indexBase) {
@@ -4075,8 +3993,6 @@ double InStream::readDouble(double minv, double maxv, const std::string &variabl
 std::vector<double>
 InStream::readDoubles(int size, double minv, double maxv, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readDoubles, readDouble(minv, maxv, variablesName), double, true)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::vector<double> InStream::readDoubles(int size, int indexBase) {
@@ -4111,14 +4027,11 @@ double InStream::readStrictReal(double minv, double maxv,
         }
     }
 
-    if (strict && !variableName.empty()) {
+    if (strict && !variableName.empty())
         validator.addBoundsHit(variableName, ValidatorBoundsHit(
                 doubleDelta(minv, result) < ValidatorBoundsHit::EPS,
                 doubleDelta(maxv, result) < ValidatorBoundsHit::EPS
         ));
-        validator.adjustConstantBounds(variableName, minv, maxv);
-        validator.addVariable(variableName);
-    }
 
     return result;
 }
@@ -4129,8 +4042,6 @@ std::vector<double> InStream::readStrictReals(int size, double minv, double maxv
     __testlib_readMany(readStrictReals,
                        readStrictReal(minv, maxv, minAfterPointDigitCount, maxAfterPointDigitCount, variablesName),
                        double, true)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 double InStream::readStrictDouble(double minv, double maxv,
@@ -4147,8 +4058,6 @@ std::vector<double> InStream::readStrictDoubles(int size, double minv, double ma
     __testlib_readMany(readStrictDoubles,
                        readStrictDouble(minv, maxv, minAfterPointDigitCount, maxAfterPointDigitCount, variablesName),
                        double, true)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 bool InStream::eof() {
@@ -4307,8 +4216,6 @@ void InStream::readStringTo(std::string &result, const pattern &p, const std::st
                       __testlib_part(result) + "\", doesn't correspond to pattern \"" + p.src() + "\"").c_str());
         }
     }
-    if (strict && !variableName.empty())
-        validator.addVariable(variableName);
 }
 
 void InStream::readStringTo(std::string &result, const std::string &ptrn, const std::string &variableName) {
@@ -4323,8 +4230,6 @@ std::string InStream::readString(const pattern &p, const std::string &variableNa
 std::vector<std::string>
 InStream::readStrings(int size, const pattern &p, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readStrings, readString(p, variablesName), std::string, false)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::string InStream::readString(const std::string &ptrn, const std::string &variableName) {
@@ -4336,8 +4241,6 @@ std::vector<std::string>
 InStream::readStrings(int size, const std::string &ptrn, const std::string &variablesName, int indexBase) {
     pattern p(ptrn);
     __testlib_readMany(readStrings, readString(p, variablesName), std::string, false)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 void InStream::readLineTo(std::string &result) {
@@ -4367,8 +4270,6 @@ std::string InStream::readLine(const pattern &p, const std::string &variableName
 std::vector<std::string>
 InStream::readLines(int size, const pattern &p, const std::string &variablesName, int indexBase) {
     __testlib_readMany(readLines, readString(p, variablesName), std::string, false)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 std::string InStream::readLine(const std::string &ptrn, const std::string &variableName) {
@@ -4379,8 +4280,6 @@ std::vector<std::string>
 InStream::readLines(int size, const std::string &ptrn, const std::string &variablesName, int indexBase) {
     pattern p(ptrn);
     __testlib_readMany(readLines, readString(p, variablesName), std::string, false)
-    if (strict && !variablesName.empty())
-        validator.addVariable(variablesName);
 }
 
 #ifdef __GNUC__
@@ -4421,10 +4320,15 @@ NORETURN void __testlib_quitp(double points, const char *message) {
     std::string stringPoints = removeDoubleTrailingZeroes(format("%.10f", points));
 
     std::string quitMessage;
-    if (NULL == message || 0 == strlen(message))
-        quitMessage = stringPoints;
-    else
+    if (localJudger) {
         quitMessage = stringPoints + " " + message;
+        partialScore = points;
+    } else {
+        if (NULL == message || 0 == strlen(message))
+            quitMessage = stringPoints;
+        else
+            quitMessage = stringPoints + " " + message;
+    }
 
     quit(_points, quitMessage.c_str());
 }
@@ -4434,10 +4338,15 @@ NORETURN void __testlib_quitp(int points, const char *message) {
     std::string stringPoints = format("%d", points);
 
     std::string quitMessage;
-    if (NULL == message || 0 == strlen(message))
-        quitMessage = stringPoints;
-    else
+    if (localJudger) {
         quitMessage = stringPoints + " " + message;
+        partialScore = points;
+    } else {
+        if (NULL == message || 0 == strlen(message))
+            quitMessage = stringPoints;
+        else
+            quitMessage = stringPoints + " " + message;
+    }
 
     quit(_points, quitMessage.c_str());
 }
@@ -4890,6 +4799,28 @@ void registerTestlib(int argc, ...) {
 
     registerTestlibCmd(argc + 1, argv);
     delete[] argv;
+}
+
+void registerLocalChecker(const std::string &_inputFile, const std::string &_outputFile, const std::string &_answerFile, int _perfectScore, const std::string &_scoreFile, const std::string &_reportFile = "") {
+    localJudger = true;
+    __testlib_ensuresPreconditions();
+    TestlibFinalizeGuard::registered = true;
+
+    testlibMode = _checker;
+    __testlib_set_binary(stdin);
+
+    inf.init(_inputFile, _input);
+    ouf.init(_outputFile, _output);
+    ans.init(_answerFile, _answer);
+    perfectScore = _perfectScore;
+    scoreFile = fopen(_scoreFile.c_str(), "w");
+    resultName = _reportFile;
+    appesMode = false;
+}
+
+void registerLemonChecker(int argc, char* argv[]) {
+    if (argc != 7) quit(_fail, "Number of arguments for lemon checkers must be 7.");
+    registerLocalChecker(argv[1], argv[2], argv[3], atoi(argv[4]), argv[5], argv[6]);
 }
 
 static inline void __testlib_ensure(bool cond, const std::string &msg) {

@@ -22,5 +22,7 @@ users:
   gyh:
     std: {expected: == 100, path: ./gyh/std.cpp}
     brute: {expected: == 0, path: ./gyh/brute.cpp}
+  cxr:
+    std: {expected: == 100, path: ./check/std.cpp}
 version: 1
 
