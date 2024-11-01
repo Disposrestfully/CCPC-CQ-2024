@@ -1,10 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-ifstream fin("3.in");
+/*ifstream fin("3.in");
 ofstream fout("3.ans");
 #define cin fin
-#define cout fout
+#define cout fout*/
 signed main(){
 	ios::sync_with_stdio(0);
 	cin.tie(0);

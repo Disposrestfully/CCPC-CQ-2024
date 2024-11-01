@@ -2,7 +2,7 @@
 using namespace std;
 #define int long long
 mt19937 mrand(time(0));
-ofstream fout("2.in");
+ofstream fout("5.in");
 #define cout fout
 signed main(){
 	ios::sync_with_stdio(0);
