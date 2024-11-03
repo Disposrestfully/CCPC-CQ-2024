@@ -15,7 +15,8 @@ long long readAns(InStream& in,int test){
     long long c=in.readLong(0,maxc);
     long long d=in.readLong(1,maxc);
     if(c<0){
-        in.quitf(_wa,"Invalid answer(c=%lld).(Testcase %d)",c,test);
+       quitf(_wa,"Invalid answer(c=%lld).(Testcase %d)",c,test);
+        //quitf(_wa,"Invalid answer");
     }
     long long k=p*d+q*c,w=q*d;
     long long g=gcd(k,w);
@@ -27,23 +28,27 @@ long long readAns(InStream& in,int test){
         w/=5;
     }
     if(w>1){
-        in.quitf(_wa,"The result is not terminating.(Testcase %d)",test);
+        quitf(_wa,"The result is not terminating.(Testcase %d)",test);
+     //   quitf(_wa,"The result is not terminating.");
     }
     return c;
 }
 int main(int argc,char* argv[]){
 	// registerTestlibCmd(4,argv);
-	registerTestlibCmd(argc,argv);
+	//registerTestlibCmd(argc,argv);
+	registerLemonChecker(argc, argv);
 	int t=inf.readInt();
 	for(int i=1;i<=t;i++){
 	    readInput();
 	    long long jans=readAns(ans,i);
 	    long long pans=readAns(ouf,i);
 	    if(jans<pans){
-	        quitf(_wa,"Jury found better answer than participant's(%lld < %lld)(Testcase %d)",jans,pans,i);
+	        quitf(_wa,"Jury found better answer than participant's %lld < %lld (Testcase %d)",jans,pans,i);
+	    //	quitf(_wa,"Jury found better answer than participant's");
 	    }
 	    if(jans>pans){
-	        quitf(_fail,"Participant found better answer than jury's(%lld > %lld)(Testcase %d)",jans,pans,i);
+	        quitf(_fail,"Participant found better answer than jury's %lld > %lld (Testcase %d)",jans,pans,i);
+	    	//quitf(_fail,"Participant found better answer than jury's");
 	    }
 	}
 	quitf(_ok,"%d case(s)",t);

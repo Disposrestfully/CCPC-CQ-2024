@@ -6,26 +6,62 @@ compile:
   java: ''
   pas: -O2
   py: ''
-data: 
-- cases: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
+data:
+- cases:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
 folder: problem
 memory limit: 512 MiB
 name: H
 partial score: false
 pre: []
 samples:
-- cases: [1,2,3]
+- cases:
+  - 1
+  - 2
+  - 3
 time limit: 6.0
 title:
-  zh-cn: 用于试题标题的中文名称
+  zh-cn: 沙堆
 type: program
 users:
   crn:
-    std: {expected: == 100, path: crn/std.cpp}
+    std:
+      expected: == 100
+      path: crn/std.cpp
   psj:
-    nsqrt: {expected: < 100, path: psj/nsqrt.cpp}
-    brute: {expected: < 100, path: psj/brute.cpp}
-    n2_clean: {expected: < 100, path: psj/n2_clean.cpp}
-    n2_mark: {expected: < 100, path: psj/n2_mark.cpp}
-    n2log: {expected: < 100, path: psj/n2log.cpp}
+    brute:
+      expected: < 100
+      path: psj/brute.cpp
+    n2_clean:
+      expected: < 100
+      path: psj/n2_clean.cpp
+    n2_mark:
+      expected: < 100
+      path: psj/n2_mark.cpp
+    n2log:
+      expected: < 100
+      path: psj/n2log.cpp
+    nsqrt:
+      expected: < 100
+      path: psj/nsqrt.cpp
 version: 2

@@ -1,15 +1,20 @@
 args:
-  t: 10000
   a: 1000000
   d: 1000000000
+  t: 10000
 compile:
   c: -O2 -std=c11
   cpp: -O2 -std=c++14
   java: ''
   pas: -O2
   py: ''
-data: 
-- cases: [1,2,3,4]
+data:
+- cases:
+  - 1
+  - 2
+  - 3
+  - 4
+  chk: chk.cpp testlib.h
   score: 100
 folder: problem
 memory limit: 512 MiB
@@ -17,19 +22,20 @@ name: terminal
 partial score: false
 pre: []
 samples:
-- cases: [1]
+- cases:
+  - 1
 time limit: 1.0
 title:
   zh-cn: 有限小数
 type: program
 users:
   DoremySG:
-    std:
-      expected: == 100
-      path: DoremySG/std.cpp
     slow:
       expected: == 0
       path: DoremySG/slow.cpp
+    std:
+      expected: == 100
+      path: DoremySG/std.cpp
   gyh:
     test:
       expected: == 100

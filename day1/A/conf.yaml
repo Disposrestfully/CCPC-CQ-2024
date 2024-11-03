@@ -7,78 +7,36 @@ compile:
   pas: -O2
   py: ''
 data:
-- cases: [1,2,3,4,5,6,7,8,9,10]
-# - args:
-#     a: 8
-#     n: 5
-#     sp: false
-#   cases:
-#   - 1
-#   - 2
-#   score: 15
-# - args:
-#     a: 3000
-#     n: 2000
-#     sp: true
-#   cases:
-#   - 3
-#   - 4
-#   score: 20
-# - args:
-#     a: 50
-#     n: 30
-#     sp: false
-#   cases:
-#   - 1
-#   - 2
-#   - 5
-#   - 6
-#   score: 25
-# - args:
-#     a: 300
-#     n: 200
-#     sp: false
-#   cases:
-#   - 1
-#   - 2
-#   - 5
-#   - 6
-#   - 7
-#   - 8
-#   score: 20
-# - args:
-#     a: 3000
-#     n: 2000
-#     sp: false
-#   cases:
-#   - 1
-#   - 2
-#   - 3
-#   - 4
-#   - 5
-#   - 6
-#   - 7
-#   - 8
-#   - 9
-#   - 10
-#   score: 20
+- cases:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
 folder: problem
 memory limit: 512 MiB
 name: prodphisum
 partial score: false
+pre: []
 samples:
-- cases: [1]
+- cases:
+  - 1
 time limit: 2.0
 title:
   zh-cn: 乘积，欧拉函数，求和
 type: program
 users:
-  psj:
-    std:
-      expected: == 100
-      path: psj/std.cpp
   cxr:
     std:
       expected: == 100
       path: check/std.cpp
+  psj:
+    std:
+      expected: == 100
+      path: psj/std.cpp
 version: 2

@@ -31,7 +31,7 @@ void Out(int n)
 {
 	printf("%d\n",n);int i;
 	for(i=2;i<=n;i++)printf("%d %d\n",fa[i],i);
-	for(i=1;i<=n;i++)printf("%d ",c[i]);
+	for(i=1;i<=n;i++){printf("%d",c[i]);if(i==n)printf("\n");else printf(" ");} 
 }
 int main(){
 	srand(1437);

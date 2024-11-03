@@ -20,6 +20,7 @@ int main(){
 			inc(f[i + 1][(5 * j + 4) % p], 1ll * h[i][j] * ',');
 			for(int k = 0 ; k < 5 ; ++k) inc(h[i + 1][(5 * j + k) % p], h[i][j]);
 			inc(g[i + 1][(5 * j + 1) % p], h[i][j] - g[i][j] + P);
+			inc(g[i + 1][(5 * j + 2) % p], g[i][j]);
 			inc(g[i + 1][(5 * j + 3) % p], h[i][j] - g[i][j] + P);
 		}
 		inc(f[i + 1][0], '[' - ' ' + P);
