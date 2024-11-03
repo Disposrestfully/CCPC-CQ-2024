@@ -25,4 +25,6 @@ users:
   esc:
     val: {expected: == 100, path: esc/val.cpp}
     std: {expected: == 100, path: esc/ac.cpp}
+  rsy:
+    test: {expected: == 100, path: rsy/test.cpp}
 version: 2
