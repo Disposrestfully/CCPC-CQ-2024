@@ -6,22 +6,30 @@ compile:
   java: ''
   pas: -O2
   py: ''
-data: 
-- cases: [1,2,3]
+data:
+- cases:
+  - 1
+  - 2
+  - 3
 folder: problem
 memory limit: 512 MiB
 name: calc
 partial score: false
-samples: 
-- cases: [1]
+pre: []
+samples:
+- cases:
+  - 1
 time limit: 1.0
 title:
   zh-cn: 算术
 type: program
 users:
   gyh:
-    std: {expected: == 100, path: ./gyh/std.cpp}
+    std:
+      expected: == 100
+      path: ./gyh/std.cpp
   wcz:
-    sol: {expected: == 100, path: ./wcz/sol.cpp}
+    sol:
+      expected: == 100
+      path: ./wcz/sol.cpp
 version: 1
-

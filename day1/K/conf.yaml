@@ -6,24 +6,48 @@ compile:
   java: ''
   pas: -O2
   py: ''
-data: 
-- cases: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+data:
+- cases:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
 folder: problem
 memory limit: 512 MiB
 name: magicbullet
 partial score: false
-samples: 
-- cases: [1,2,3]
+pre: []
+samples:
+- cases:
+  - 1
+  - 2
+  - 3
 time limit: 2.0
 title:
   zh-cn: 魔弹
 type: program
 users:
   gyh:
-    std: {expected: == 100, path: ./gyh/std.cpp}
+    std:
+      expected: == 100
+      path: ./gyh/std.cpp
   rsy:
-    # brute1: {expected: == 0, path: ./rsy/brute1.cpp}
-    # brute2: {expected: == 0, path: ./rsy/brute2.cpp}
-    brute3: {expected: == 100, path: ./rsy/brute3.cpp}
+    brute3:
+      expected: == 100
+      path: ./rsy/brute3.cpp
 version: 1
-
