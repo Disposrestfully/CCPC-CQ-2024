@@ -6,27 +6,16 @@ compile:
   java: ''
   pas: -O2
   py: ''
-data:
-- cases:
-  - 1
-  - 2
-  - 3
-  score: 100
+data: []
 folder: problem
 memory limit: 512 MiB
-name: rect
+name: M
 partial score: false
 pre: []
-samples:
-- cases:
-  - 1
+samples: []
 time limit: 1.0
 title:
-  zh-cn: 连方
+  zh-cn: osu!mania
 type: program
-users:
-  DoremySG:
-    std:
-      expected: == 100
-      path: DoremySG/std.cpp
+users: {}
 version: 2

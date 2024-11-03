@@ -6,23 +6,51 @@ compile:
   java: ''
   pas: -O2
   py: ''
-data: 
-- cases: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+data:
+- cases:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
 folder: problem
 memory limit: 512 MiB
 name: picopark
 partial score: false
-samples: 
-- cases: [1,2,3]
+pre: []
+samples:
+- cases:
+  - 1
+  - 2
+  - 3
 time limit: 1.0
 title:
   zh-cn: Pico Park
 type: program
 users:
-  gyh:
-    std: {expected: == 100, path: ./gyh/std.cpp}
-    brute: {expected: == 0, path: ./gyh/brute.cpp}
   cxr:
-    std: {expected: == 100, path: ./check/std.cpp}
+    std:
+      expected: == 100
+      path: ./check/std.cpp
+  gyh:
+    brute:
+      expected: == 0
+      path: ./gyh/brute.cpp
+    std:
+      expected: == 100
+      path: ./gyh/std.cpp
 version: 1
-

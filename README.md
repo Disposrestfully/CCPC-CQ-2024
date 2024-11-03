@@ -11,6 +11,6 @@
 | G    | Terminal           | syd    | Medium        | 数论，exgcd          | gyh    |
 | H    | sandpile           | crn    | Hard+         | 数据结构             | Itst   |
 | I    | 算术               | gyh20  | Easy          | 贪心                 | ix35   |
-| J    | PICO PARK I        | gyh20  | Medium        | 概率 DP              | cxr    |
-| K    | PICO PARK II       | gyh20  | Hard          | 概率，多项式         | rsy    |
+| J    | PICO PARK          | gyh20  | Medium        | 概率 DP              | cxr    |
+| K    | Magic Bullet       | gyh20  | Hard          | 概率，多项式         | rsy    |
 | L    | Pattern            | dhw    | Easy          | 三进制               | cxr    |
