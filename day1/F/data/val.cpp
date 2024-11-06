@@ -1,28 +1,20 @@
+#include <bits/stdc++.h>
 #include "testlib.h"
-using namespace std;
-int main(int argc,char **argv){
-	registerValidation();
-	int T=inf.readInt(1,10000,"T");	inf.readEoln();
-	int cn=0;
-	for(;T;--T){
-		int n=inf.readInt(1,100000,"n");
-		cn+=n;
-		inf.readEoln();
-		ensuref(cn<=200000,"sum of n should <= 200000");
-		string s1=inf.readToken("[\\.#]{1,100000}","s1");
-		ensuref(s1.length()==n,"length of s1 should be n");
-		bool ok=0;
-		for(int i=0;i<n;++i)if(s1[i]=='#')ok=1;
-		ensuref(ok,"s1 should contain at least one '#'");
-		inf.readEoln();
-		string s2=inf.readToken("[\\.#]{1,100000}","s2");
-		ensuref(s2.length()==n,"length of s2 should be n");
-		ok=0;
-		for(int i=0;i<n;++i)if(s2[i]=='#')ok=1;
-		ensuref(ok,"s2 should contain at least one '#'");
-		inf.readEoln();
+signed main (int argc, char *argv[]) {
+	registerValidation(argc, argv);
+	int T = inf.readInt(1, 10000); inf.readEoln();
+	int sumn = 0;
+	for (int t = 1; t <= T; t++) {
+		int n = inf.readInt(2, 100000); inf.readEoln(); sumn += n;
+		std::string a = inf.readToken(); inf.readEoln();
+		ensuref((int)a.length() == n, "The length of a is not equal to n.");
+		std::string b = inf.readToken(); inf.readEoln();
+		ensuref((int)b.length() == n, "The length of b is not equal to n.");
+		for (int i = 0; i < n; i++)
+			ensuref(a[i] == '.' or a[i] == '#', "There is another type of character in a."),
+			ensuref(b[i] == '.' or b[i] == '#', "There is another type of character in b.");
 	}
+	ensuref(sumn <= 200000, "The sum of n exceeds 200,000.");
 	inf.readEof();
-	printf("Validation passed\n");
 	return 0;
 }

@@ -1,13 +1,9 @@
-#include "testlib.h"
 #include <bits/stdc++.h>
-using namespace std;
-int n,m;
-int main (int argc,char* argv[]) {
-	registerValidation(argc,argv);
-	n=inf.readInt(2,1000);
-	inf.readSpace();
-	m=inf.readInt(2,1000);
-	inf.readChar('\n');
+#include "testlib.h"
+signed main (int argc, char *argv[]) {
+	registerValidation(argc, argv);
+	int n = inf.readInt(2, 1000); inf.readSpace();
+	int m = inf.readInt(2, 1000); inf.readEoln();
 	inf.readEof();
 	return 0;
 }
