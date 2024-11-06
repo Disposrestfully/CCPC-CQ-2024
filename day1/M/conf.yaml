@@ -1,21 +1,31 @@
 args:
-  n: 1000
 compile:
-  c: -O2 -std=c11
   cpp: -O2 -std=c++14
-  java: ''
-  pas: -O2
-  py: ''
-data: []
+data:
+- cases:
+  - 1
 folder: problem
 memory limit: 512 MiB
-name: M
+name: mania
 partial score: false
 pre: []
-samples: []
+samples:
+- cases:
+  - 1
 time limit: 1.0
 title:
   zh-cn: osu!mania
 type: program
-users: {}
+users:
+  rsy:
+    std:
+      expected: == 100
+      path: ./rsy/std.cpp
+    round:
+      expected: == 100
+      path: ./rsy/round.cpp
+  cxr:
+    std:
+      expected: <= 100
+      path: ./cxr/std.cpp
 version: 2
