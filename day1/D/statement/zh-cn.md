@@ -33,7 +33,3 @@
 {{ s('sample', 2) }}
 
 {{ self.sample_text() }}
-
-{{ s('sample', 3) }}
-
-{{ self.sample_text() }}
