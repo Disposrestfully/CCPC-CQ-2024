@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 const int N=3005;
+const double esp=1e-6;
 inline int read(){
     int x=0,w=1;
     char ch=0;
@@ -33,7 +34,7 @@ int main(){
 		if (tmp>0.8) tmp-=0.8;
 		else tmp=0;
 		pp=ppmax*5.0*tmp;
-		printf("%.2lf%c %d\n",acc*100, '\%',(int)pp);
+		printf("%.2lf%c %d\n",(acc*100.0+esp), '\%',(int)(pp+0.5+esp));
 	}
     return 0;
 }
