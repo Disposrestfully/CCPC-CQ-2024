@@ -30,7 +30,9 @@ $$\text{pp} = \max\left(0, \frac{320 \times 3029 + 300 \times 2336 + 200 \times 
 
 {{ self.input_file() }}
 
-输入共一行，包含六个非负正整数 $\text{ppmax}$，保证 $0 \le \text{ppmax} \le 3000$，$0 \le a, b, c, d, e, f \le 2 \times 10 ^ 4$。
+输入共两行，第一行包括一个非负整数$\text{ppmax}$，第二行包含六个非负整数$a,b,c,d,e,f$。含义见题面。
+
+保证 $0 \le \text{ppmax} \le 3000$，$0 \le a, b, c, d, e, f \le 2 \times 10 ^ 4$。
 
 {{ s('output format') }}
 

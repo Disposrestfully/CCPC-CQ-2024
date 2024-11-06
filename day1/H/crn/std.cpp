@@ -132,5 +132,7 @@ int main(){
 	LL l=0,r=4ll*n*n*n,mid,res=-1,nw=a[1],v;
 	while(l<=r){mid=(l+r)>>1;v=0;v=upper_bound(w1+1,w1+tp+1,mid)-w1-1;if(nw-v<d){res=mid;a[1]=nw-v;r=mid-1;}else l=mid+1;}
 	for(i=h[1];i;i=e[i].next)dfs2(e[i].to,1,res);
-	for(i=1;i<=n;i++)wr(a[i]),CH[++cn]=' ';fwrite(CH+1,1,cn,stdout);return 0;
+	for(i=1;i<=n;i++)wr(a[i]),CH[++cn]=' ';
+	--cn;
+	fwrite(CH+1,1,cn,stdout);return 0;
 }
