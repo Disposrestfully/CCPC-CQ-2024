@@ -2,7 +2,7 @@
 
 {{ s('description') }}
 
-osu! 是一款风靡全球的音乐游戏，分为四个模式：osu!，osu!taiko，osu!catch，osu!mania。osu!mania 是一款下落式节奏游戏，像是钢琴模拟器一样。这个模式主要由 woc2006 开发并移植。它基于各种轨道式音乐游戏（例如 劲舞革命 (Dance Dance Revolution) 和 狂热节拍 (Beatmania)）。osu!mania 的吉祥物是一对双胞胎姐妹，Mani 和 Mari，拥有一头紫色或淡紫色的头发。
+osu! 是一款风靡全球的音乐游戏，分为四个模式：osu!，osu!taiko，osu!catch，osu!mania。osu!mania 是一款下落式节奏游戏，像是钢琴模拟器一样。这个模式主要由 woc2006 开发并移植。它基于各种轨道式音乐游戏（例如 劲舞革命 (Dance Dance Revolution) 和 狂热节拍 (Beatmania)）。
 
 {{ img('osu!mania.png', size = 0.5, align = 'middle', inline = False, caption='osu!mania 游戏界面') }}
 
@@ -30,28 +30,22 @@ $$\text{pp} = \max\left(0, \frac{320 \times 3029 + 300 \times 2336 + 200 \times 
 
 {{ self.input_file() }}
 
-输入共两行，第一行包括一个非负整数$\text{ppmax}$，第二行包含六个非负整数$a,b,c,d,e,f$。含义见题面。
+**本题包含多组测试数据。**
 
-保证 $0 \le \text{ppmax} \le 3000$，$0 \le a, b, c, d, e, f \le 2 \times 10 ^ 4$。
+输入的第一行包含一个正整数 $T$，表示数据组数。保证 $1 \le T \le 100$。
+
+对于每组测试数据：
+
+输入的第一行包含一个非负整数 $\text{ppmax}$。保证 $0 \le \text{ppmax} \le 3000$。
+
+输入的第二行包含六个非负整数 $a, b, c, d, e, f$，含义如题目描述所示。保证 $0 \le a, b, c, d, e, f \le 2 \times 10 ^ 4$。
 
 {{ s('output format') }}
 
 {{ self.output_file() }}
 
-输出一行两个数，第一个数表示准确率，以百分数形式输出，精确到 $10 ^ {-4}$；第二个数为个人表现，以整数形式输出。
+对于每组测试数据：输出一行两个数，以空格隔开。其中第一个数表示准确率，以百分数形式输出，精确到 $10 ^ {-4}$；第二个数为个人表现，以整数形式输出。
 
 {{ s('sample', 1) }}
 
 {{ self.sample_text() }}
-
-上面是自动读入样例 `1.in/ans`（存储在 `down` 文件夹内） 然后渲染到题面中；如果只有一组样例，则去掉 `1` 或将其替换成空串，样例仍然保存成 `1.in/ans`。上面的 `1` 可以是字符串。
-
-{{ self.title_sample_description() }}
-
-这是第一组数据的样例说明。
-
-{{ s('sample', 2) }}
-
-{{ self.sample_file() }}
-
-上面是只提示存在第二组样例，但不渲染到题面中。
