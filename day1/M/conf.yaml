@@ -1,4 +1,4 @@
-args:
+args: null
 compile:
   cpp: -O2 -std=c++14
 data:
@@ -17,15 +17,15 @@ title:
   zh-cn: osu!mania
 type: program
 users:
-  rsy:
-    std:
-      expected: == 100
-      path: ./rsy/std.cpp
-    round:
-      expected: == 100
-      path: ./rsy/round.cpp
   cxr:
     std:
       expected: <= 100
       path: ./cxr/std.cpp
+  rsy:
+    round:
+      expected: == 100
+      path: ./rsy/round.cpp
+    std:
+      expected: == 100
+      path: ./rsy/std.cpp
 version: 2
