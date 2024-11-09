@@ -1,5 +1,0 @@
-n_, p_, l_, r_ = raw_input().split()
-p = float(p_)
-l = int(l_)
-r = int(r_)
-print((r - l + 1) * p)
