@@ -19,7 +19,7 @@ $$\sum_{S \subseteq \{1,2,\cdots,n\}} \varphi \left(\prod_{i \in S} a_i\right).$
 
 {{ self.input_file() }}
 
-输入的第一行为一个整数 $n (1 \le n \le 2000)$ 表示数的数量，接下来一行 $n$ 个整数 $a_1,a_2,\cdots, a_n (1 \le a_i \le 3000)$。
+输入的第一行为一个整数 $n \ (1 \le n \le 2000)$ 表示数的数量，接下来一行 $n$ 个整数 $a_1,a_2,\cdots, a_n \ (1 \le a_i \le 3000)$。
 
 {{ s('output format') }}
 

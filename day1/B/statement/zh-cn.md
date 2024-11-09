@@ -5,7 +5,7 @@
 
 {{ img('img.png', size = 0.4, align = 'middle', inline = False, label='fig:sample') }}
 
-以下我们形式化地描述从 $s$ 到 $\text{str(list(}s))$ 的变换。为了得到 $\text{str(list(}s))$，我们需要将 $s$ 中的每个字符 $s_i(0 \le i < |s|)$ 替换为使用如下规则产生的长度为 $5$ 的字符串 $t_{i,0}t_{i,1}t_{i,2}t_{i,3}t_{i,4}$：
+以下我们形式化地描述从 $s$ 到 $\text{str(list(}s))$ 的变换。为了得到 $\text{str(list(}s))$，我们需要将 $s$ 中的每个字符 $s_i \ (0 \le i < |s|)$ 替换为使用如下规则产生的长度为 $5$ 的字符串 $t_{i,0}t_{i,1}t_{i,2}t_{i,3}t_{i,4}$：
 
 - $t_{i,2} = s_i$。
 - 当 $s_i$ 不是单引号 `'` 时，$t_{i,1}$ 和 $t_{i,3}$ 均为单引号 `'` (ASCII 39)，否则 $t_{i,1}$ 和 $t_{i,3}$ 均为双引号 `"` (ASCII 34)。
@@ -18,7 +18,7 @@
 
 {{ self.input_file() }}
 
-输入的第一行一个由除空白字符以外的可见字符构成的字符串 $s (1 \le |s| \le {{tl.hn(args['len'])}})$，第二行两个整数 $k, p(1 \le k,p \le {{tl.hn(args['k'])}})$。
+输入的第一行一个由除空白字符以外的可见字符构成的字符串 $s \ (1 \le |s| \le {{tl.hn(args['len'])}})$，第二行两个整数 $k, p \ (1 \le k,p \le {{tl.hn(args['k'])}})$。
 
 {{ s('output format') }}
 
