@@ -1,12 +1,10 @@
 folder: contest
 name: name for programmers
 short title:
-  zh-cn: 正式的简称
+  zh-cn: 2024 年第十届中国大学生程序设计竞赛（重庆）
 subdir:
-- day1
 - day0
-subtitle:
-  zh-cn: 子标题如冬令营
+- day1
 title:
-  zh-cn: 正式的中文名称
+  zh-cn: 2024 年第十届中国大学生程序设计竞赛（重庆）
 version: 2

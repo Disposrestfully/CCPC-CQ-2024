@@ -1,21 +1,19 @@
-end time: 1926-08-17 00:00:01+0800
+end time: 2024-11-10 14:00:00+0800
 folder: day
 name: day1
-start time: 1926-08-17 00:00:00+0800
+start time: 2024-11-10 09:00:00+0800
 subdir:
 - A
-- B
-- C
-- D
-- E
-- F
+- M
 - G
-- H
-- I
+- D
 - J
 - K
+- B
+- F
+- I
+- C
 - L
-- M
-title:
-  zh-cn: 第一试
+- H
+- E
 version: 2

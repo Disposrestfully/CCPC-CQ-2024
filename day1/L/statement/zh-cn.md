@@ -4,7 +4,9 @@
 
 对于正整数 $n$，用如下方法定义一个 $3^n\times 3^n$ 的 $01$ 矩阵 $A_n$：
 
-- 若 $3^{n-1}\leq i<2\times3^{n-1}$ 或者 $3^{n-1}\leq j<2\times3^{n-1}$，则 $A_n(i,j)=\begin{cases}1&(n=1)\\A_{n-1}(i\bmod 3^{n-1},j\bmod 3^{n-1})&(n\geq 2)\end{cases}$，其中 $x\bmod y$ 表示 $x$ 对 $y$ 取模后的结果；否则，$A_n(i,j)=0$。
+- 若 $3^{n-1}\leq i<2\times3^{n-1}$ 或者 $3^{n-1}\leq j<2\times3^{n-1}$，则 $$A_n(i,j)=\begin{cases}1, & n = 1, \\A_{n-1}(i\bmod 3^{n-1},j\bmod 3^{n-1}), & n\geq 2.\end{cases}$$ 其中 $x\bmod y$ 表示 $x$ 对 $y$ 取模后的结果；
+
+- 否则，$A_n(i,j)=0$。
 
 其中，$A_n(i,j)$ 表示矩阵 $A_n$ 第 $i$ 行第 $j$ 列的元素，并且行、列的编号均从 $0$ 开始。
 
