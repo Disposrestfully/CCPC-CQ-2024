@@ -42,15 +42,19 @@ title:
   zh-cn: Pico Park
 type: program
 users:
-  cxr:
-    std:
-      expected: == 100
-      path: ./check/std.cpp
-  gyh:
-    brute:
-      expected: == 0
-      path: ./gyh/brute.cpp
-    std:
-      expected: == 100
-      path: ./gyh/std.cpp
+  rsy:
+    test:
+      expected: <= 100
+      path: ./rsy/test.cpp
+  # cxr:
+  #   std:
+  #     expected: == 100
+  #     path: ./check/std.cpp
+  # gyh:
+  #   brute:
+  #     expected: == 0
+  #     path: ./gyh/brute.cpp
+  #   std:
+  #     expected: == 100
+  #     path: ./gyh/std.cpp
 version: 1
